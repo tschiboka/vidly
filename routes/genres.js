@@ -6,8 +6,6 @@ const
         { id: 1, name: "Horror" },
         { id: 2, name: "Action" }
     ];
-
-
 function validateGenre(genre) {
     const schema = { name: Joi.string().min(3).required() }
     return Joi.validate(genre, schema);
