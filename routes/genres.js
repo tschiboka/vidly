@@ -13,17 +13,15 @@ const Genre = mongoose.model("Genre", new mongoose.Schema({
 
 
 function validateGenre(genre) {
-    const schema = { name: Joi.string().min(3).required() }
+    const schema = { name: Joi.string().min(3).max(20).required() }
     return Joi.validate(genre, schema);
 }
 
 
 
 router.get("/", async (req, res) => {
-    try {
-        const genres = await Genre.find().sort("name");
-        res.send(genres);
-    } catch (err) { res.send("Could not get genres!") }
+    try { res.send(await Genre.find().sort("name")); }
+    catch (err) { res.send("Could not get genres!"); }
 });
 
 
@@ -33,18 +31,18 @@ router.get("/:id", async (req, res) => {
         const genre = await Genre.findById(req.params.id);
         if (!genre) return res.status(404).send("No genre on the given id");
         res.send(genre);
-    } catch (err) { res.send(`Could not get genre on the given id:${req.params.id}`); }
+    } catch (err) { res.send(`Could not get genre on the given id: ${req.params.id}`); }
 });
 
 
 
-router.post("/", (req, res) => {
-    const { error } = validateGenre(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+router.post("/", async (req, res) => {
+    try {
+        const { error } = validateGenre(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
 
-    const genre = { id: genres.length + 1, name: req.body.name };
-    genres.push(genre);
-    res.send(genre);
+        res.send(await new Genre({ name: req.body.name }).save());
+    } catch (err) { res.send(`Could not post new genre ${JSON.stringify(req.body.name)}`); }
 });
 
 
