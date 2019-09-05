@@ -42,20 +42,17 @@ router.post("/", async (req, res) => {
         if (error) return res.status(400).send(error.details[0].message);
 
         res.send(await new Genre({ name: req.body.name }).save());
-    } catch (err) { res.send(`Could not post new genre ${JSON.stringify(req.body.name)}`); }
+    } catch (err) { res.send(`Could not post new genre ${req.body.name}`); }
 });
 
 
 
-router.put("/:id", (req, res) => {
-    const genre = genres.find(g => g.id === parseInt(req.params.id));
-    if (!genre) return res.status(404).send("No genre on the given id");
+router.put("/:id", async (req, res) => {
+    try {
+        const genre = await Genre.findById(req.params.id);
 
-    const { error } = validateGenre(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    genre.name = req.body.name;
-    res.send(genre);
+        res.send(await genre.set({ name: req.body.name }).save());
+    } catch (err) { res.send(`Could not update `) }
 });
 
 
