@@ -1,20 +1,7 @@
 const
-    express = require("express"),
-    mongoose = require("mongoose"),
-    Joi = require("joi"),
-    router = express.Router(),
-    customersSchema = new mongoose.Schema({
-        name: { type: String, required: true, minlength: 3, maxlength: 50, trim: true, uppercase: true },
-        phone: { type: String, minlength: 8, maxlength: 12, trim: true },
-        isGold: { type: Boolean, default: false }
-    }),
-    Customer = mongoose.model("Customer", customersSchema),
-    validateCustomer = customer => Joi.validate(customer, {
-        name: Joi.string().min(3).max(50).required(),
-        phone: Joi.string().min(8).max(12).required().regex(/^\d+$/),
-        isGold: Joi.boolean()
-    });
-
+    { Customer, validate } = require("../models/customer");
+express = require("express"),
+    router = express.Router();
 
 
 router.get("/", async (req, res) => {
@@ -36,7 +23,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const { error } = validateCustomer(req.body);
+        const { error } = validate(req.body);
         if (error) return res.status(404).send(error.message);
         res.send(await new Customer(req.body).save());
     } catch (err) { console.log(`Could not post new Customer\n${req.body}`); }
@@ -49,7 +36,7 @@ router.put("/:id", async (req, res) => {
         const customer = await Customer.findById(req.params.id);
         if (!customer) return res.status(404).send(`Could not get the Customer on id: ${req.params.id}!`);
 
-        const { error } = validateCustomer(req.body);
+        const { error } = validate(req.body);
         if (error) return res.status(404).send(error.message);
         res.send(await customer.set(req.body).save());
     } catch (err) { console.log("Error while updating database\n" + err); }
