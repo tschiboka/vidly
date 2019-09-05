@@ -15,7 +15,7 @@ async function createCustomer() {
     try {
         const customer = new Customer({
             name: "Leila",
-            //isGold: "true",
+            isGold: "true",
             phone: 09833344555
         });
 
@@ -29,6 +29,16 @@ createCustomer();
 router.get("/", async (req, res) => {
     try { res.send(await Customer.find()); }
     catch (err) { console.log("Could not get Customers from database!"); }
+});
+
+router.get("/:id", async (req, res) => {
+    try {
+        const customer = await Customer.findById(req.params.id);
+
+        if (!customer) return res.status(404).send(`Could not get the Customer on id: ${req.params.id}!`);
+
+        res.send(customer);
+    } catch (err) { console.log(err) }
 });
 
 module.exports = router;
