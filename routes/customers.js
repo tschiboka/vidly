@@ -57,4 +57,14 @@ router.put("/:id", async (req, res) => {
 
 
 
+router.delete("/:id", async (req, res) => {
+    try {
+        const customer = await Customer.findById(req.params.id);
+        if (!customer) return res.status(404).send(`Could not get the Customer on id: ${req.params.id}!`);
+        res.send(await customer.remove());
+    } catch (err) { console.log("Error while deleting Customers from db!\n" + err); }
+})
+
+
+
 module.exports = router;
