@@ -55,6 +55,19 @@ router.put("/:id", async (req, res) => {
         const { error } = validate(req.body);
         if (error) return res.status(400).send("Invalid request body!" + error.message);
 
+        const genre = await Genre.findById(req.body.genreId);
+        if (!genre) return res.status(400).send("Invalid genre " + req.body.genreId);
+
+        movie.set({
+            title: req.body.title,
+            genre: {
+                _id: genre.id,
+                name: genre.name
+            },
+            numberInStock: req.body.numberInStock,
+            dailyRentalRate: req.body.dailyRentalRate
+        });
+
         res.send(await movie.set(req.body).save());
     } catch (err) { console.log(err); }
 });
