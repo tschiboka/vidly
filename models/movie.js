@@ -1,7 +1,8 @@
 const
     mongoose = require("mongoose"),
     Joi = require("joi"),
-    genreSchema = mongoose.model("Genre").schema;
+    //genreSchema = mongoose.model("Genre").schema;
+    { genreSchema } = require("./genre");
 
 
 

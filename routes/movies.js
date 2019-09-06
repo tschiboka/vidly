@@ -1,5 +1,5 @@
 const
-    { Movie, validate } = require("../models/movies"),
+    { Movie, validate } = require("../models/movie"),
     express = require("express"),
     router = express.Router();
 

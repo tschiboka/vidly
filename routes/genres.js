@@ -1,5 +1,5 @@
 const
-    { Genre, validate } = require("../models/genres"),
+    { Genre, validate } = require("../models/genre"),
     express = require("express"),
     router = express.Router();
 
