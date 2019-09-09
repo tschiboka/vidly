@@ -6,6 +6,7 @@ const
     genresRoutes = require("./routes/genres"),
     moviesRoutes = require("./routes/movies"),
     customersRoutes = require("./routes/customers"),
+    rentalsRoutes = require("./routes/rentals"),
     app = express();
 
 
@@ -25,3 +26,4 @@ app.use("/", homeRoute);
 app.use("/api/genres", genresRoutes);
 app.use("/api/customers", customersRoutes);
 app.use("/api/movies", moviesRoutes);
+app.use("/api/rentals", rentalsRoutes);
