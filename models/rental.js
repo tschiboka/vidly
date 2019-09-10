@@ -1,8 +1,6 @@
 const
     mongoose = require("mongoose"),
     Joi = require("Joi"),
-    { customerSchema } = require("./customer"),
-    { movieSchema } = require("./movie"),
     rentalSchema = mongoose.Schema({
         customer: {
             type: new mongoose.Schema({
@@ -12,7 +10,7 @@ const
                     minlength: 3,
                     maxlength: 50
                 },
-                idGold: {
+                isGold: {
                     type: Boolean,
                     required: true
                 },
@@ -66,3 +64,4 @@ const
 
 
 module.exports.Rental = Rental;
+module.exports.validate = validateRental;
