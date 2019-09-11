@@ -1,4 +1,5 @@
 const
+    Joi = require("joi"),
     port = process.env.PORT || 3000,
     express = require("express"),
     mongoose = require("mongoose"),
@@ -7,6 +8,7 @@ const
     moviesRoutes = require("./routes/movies"),
     customersRoutes = require("./routes/customers"),
     rentalsRoutes = require("./routes/rentals"),
+    usersRoutes = require("./routes/users"),
     app = express();
 
 
@@ -21,9 +23,14 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 
 
 
+Joi.objectId = require("joi-objectid")(Joi);
+
+
+
 app.use(express.json());
 app.use("/", homeRoute);
 app.use("/api/genres", genresRoutes);
 app.use("/api/customers", customersRoutes);
 app.use("/api/movies", moviesRoutes);
 app.use("/api/rentals", rentalsRoutes);
+app.use("/api/users", usersRoutes);
