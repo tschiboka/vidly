@@ -9,6 +9,7 @@ const
     customersRoutes = require("./routes/customers"),
     rentalsRoutes = require("./routes/rentals"),
     usersRoutes = require("./routes/users"),
+    authsRoutes = require("./routes/auths"),
     app = express();
 
 
@@ -34,3 +35,4 @@ app.use("/api/customers", customersRoutes);
 app.use("/api/movies", moviesRoutes);
 app.use("/api/rentals", rentalsRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/auths", authsRoutes);
