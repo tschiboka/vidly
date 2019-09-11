@@ -1,6 +1,4 @@
 const
-    config = require("config"),
-    jwt = require("jsonwebtoken"),
     express = require("express"),
     router = express.Router(),
     { User } = require("../models/user"),
@@ -20,9 +18,7 @@ router.post("/", async (req, res) => {
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (!validPassword) return res.status(400).send("Invalid e-mail or password!1");
 
-        const token = jwt.sign({ id: user.id }, config.get("jwtPrivateKey")); // environment variable, never ever hard code provatekey
-
-        res.send(token);
+        res.send(user.generateAuthToken());
     } catch (err) { res.send("Authentication failed with Error.\n" + err) }
 });
 
