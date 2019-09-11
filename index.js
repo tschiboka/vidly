@@ -1,6 +1,7 @@
 const
     Joi = require("joi"),
     port = process.env.PORT || 3000,
+    config = require("config"),
     express = require("express"),
     mongoose = require("mongoose"),
     homeRoute = require("./routes/home"),
@@ -11,6 +12,13 @@ const
     usersRoutes = require("./routes/users"),
     authsRoutes = require("./routes/auths"),
     app = express();
+
+
+
+if (!config.get("jwtPrivateKey")) {
+    console.log("FATAL ERROR: jwtPrivateKey is not defined!");
+    process.exit(1);
+}
 
 
 
