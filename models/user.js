@@ -17,7 +17,7 @@ const
             type: String,
             required: true,
             minlength: 8,
-            maxlength: 50
+            maxlength: 1024
         }
     }),
     User = new mongoose.model("User", userSchema),
