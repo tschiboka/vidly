@@ -1,3 +1,5 @@
+require("express-async-errors");
+
 const
     Joi = require("joi"),
     port = process.env.PORT || 3000,
@@ -11,6 +13,7 @@ const
     rentalsRoutes = require("./routes/rentals"),
     usersRoutes = require("./routes/users"),
     authsRoutes = require("./routes/auths"),
+    error = require("./middleware/error"),
     app = express();
 
 
@@ -44,3 +47,5 @@ app.use("/api/movies", moviesRoutes);
 app.use("/api/rentals", rentalsRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/auths", authsRoutes);
+
+app.use(error);
