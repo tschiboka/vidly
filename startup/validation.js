@@ -1,3 +1,5 @@
-const
-    Joi = require("joi"),
-    port = process.env.PORT || 3000;
+const Joi = require("joi");
+
+module.exports = function () {
+    Joi.objectId = require("joi-objectid")(Joi);
+}

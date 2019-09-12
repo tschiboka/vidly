@@ -1,32 +1,17 @@
-
-const
-    Joi = require("joi"),
-    port = process.env.PORT || 3000,
-    express = require("express"),
-    app = express();
+const winston = require("winston");
+const express = require("express");
+const app = express();
 
 
 
+// index was polluted and had poor separation of concern so it is delegated now from ./startup/*
 require("./startup/logging")(); // load first in case of error we can already log them
 require("./startup/routes")(app);
 require("./startup/database")();
 require("./startup/config")();
+require("./startup/validation")();
 
 
 
-
-
-
-
-
-
-
-
-app.listen(port, () => console.log(`Listening on port ${port}...`));
-
-
-
-Joi.objectId = require("joi-objectid")(Joi);
-
-
-
+port = process.env.PORT || 3000;
+app.listen(port, () => winston.info(`Listening on port ${port}...`));

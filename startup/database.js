@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const winston = require("winston");
 
 
 
 module.exports = function () {
-    mongoose.connect("mongodb://localhost/vidly")
-        .then(() => console.log("Connected to Vidly database..."))
+    mongoose.connect("mongodb://localhost/vidly", { useNewUrlParser: true })
+        .then(() => winston.info("Connected to Vidly database..."))
 };

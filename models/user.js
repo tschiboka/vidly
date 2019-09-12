@@ -41,5 +41,9 @@ const
 
 
 
+mongoose.set('useCreateIndex', true); // current version needs this setting otherwise coughing up warnings
+
+
+
 module.exports.User = User;
 module.exports.validate = validateUser;
