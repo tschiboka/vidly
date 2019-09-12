@@ -19,8 +19,15 @@ const
 
 
 
+process.on("uncaughtException", ex => {
+    console.log("WE'VE GOT AN UNCAUGHT EXCEPTION!");
+    winston.error(ex.message, ex);
+});
+require("winston-mongodb");
 winston.add(winston.transports.File, { filename: "logfile.log" });
+winston.add(winston.transports.MongoDB, { db: "mongodb://localhost/vidly", level: "error" })
 
+throw new Error("Error during startup");
 
 
 if (!config.get("jwtPrivateKey")) {
