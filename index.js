@@ -13,8 +13,13 @@ const
     rentalsRoutes = require("./routes/rentals"),
     usersRoutes = require("./routes/users"),
     authsRoutes = require("./routes/auths"),
+    winston = require("winston"),
     error = require("./middleware/error"),
     app = express();
+
+
+
+winston.add(winston.transports.File, { filename: "logfile.log" });
 
 
 

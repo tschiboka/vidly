@@ -5,6 +5,7 @@ const
 
 
 router.get("/", async (req, res) => {
+    throw Error("upsie");
     res.send(await Genre.find().sort("name"));
 });
 
